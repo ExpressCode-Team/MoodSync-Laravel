@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('emotions', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Nama emosi seperti 'happy', 'sad', etc.
+            $table->integer('kode_emotion');
             $table->timestamps();
         });
     }
