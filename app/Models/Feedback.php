@@ -9,15 +9,22 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    // Tentukan tabel jika nama tabel tidak sesuai dengan konvensi Laravel
+    // Specify the table if it's different from the plural form of the model name
     protected $table = 'feedbacks';
 
-    // Tentukan kolom yang bisa diisi (mass-assignable)
+    // Mass assignable attributes
     protected $fillable = [
-        'feedback_id',
+        'recommendation_id',
         'rating',
         'comment',
-        'created_at',
-        'updated_at',
     ];
+
+    /**
+     * Get the recommendation that owns the feedback.
+     */
+    // public function recommendation()
+    // {
+    //     return $this->belongsTo(Recommendation::class);
+    // }
+
 }
