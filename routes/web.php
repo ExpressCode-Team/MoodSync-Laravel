@@ -14,6 +14,6 @@ Route::get('/login', function (SpotifyServices $spotifyService) {
     return redirect($spotifyService->getAuthorizationUrl());
 });
 Route::get('/callback', [SpotifyController::class, 'handleCallback']);
-Route::get('/spotify/access-token', [SpotifyController::class, 'getAccessToken']);
-Route::get('/spotify/artist/{id}', [SpotifyController::class, 'getArtistData']);
+Route::get('/artist/{id}', [SpotifyController::class, 'getArtistData']);
 Route::get('/playlists', [SpotifyController::class, 'getUserPlaylists']);
+Route::get('/profile', [SpotifyController::class, 'getUserProfile']);

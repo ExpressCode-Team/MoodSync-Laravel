@@ -66,7 +66,7 @@ class SpotifyController extends Controller
 
         session(['spotify_token' => $tokenData['access_token']]);
 
-        return $tokenData;
+        return response()->json($tokenData);
     }
 
     // Method untuk mendapatkan playlist pengguna
@@ -90,5 +90,18 @@ class SpotifyController extends Controller
 
         // Kembalikan daftar playlist dalam format JSON
         return response()->json($playlists);
+    }
+
+    public function getUserProfile()
+    {
+        $accessToken = session('spotify_token');
+
+        if (!$accessToken) {
+            return response()->json(['error' => 'You need to log in with Spotify'], 401);
+        }
+
+        $profile = $this->spotifyService->getUserProfile($accessToken);
+
+        return response()->json($profile);
     }
 }

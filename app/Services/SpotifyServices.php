@@ -71,4 +71,15 @@ class SpotifyServices
         // Mengembalikan hasil respons JSON
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    public function getUserProfile($accessToken)
+    {
+        $response = $this->client->get('https://api.spotify.com/v1/me', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $accessToken,
+            ],
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
