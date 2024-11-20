@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'spotify' => [
+        'client_id' => env('f878463dfe9a4a69ba92d14aa55d3a6c'),
+        'client_secret' => env('3067eb54b17e42cb9f09c0fd9baf6d3c'),
+        'redirect' => env('http://127.0.0.1:8000//spotify/callback'),
+        'scopes' => ['user-read-private', 'user-read-email'],
+    ],
 ];
