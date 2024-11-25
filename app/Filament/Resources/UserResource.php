@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -23,17 +20,67 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('id')
+                    ->label('User ID')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('spotify_id')
+                    ->label('Spotify ID')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
+                    ->label('Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label('Email Address')
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
+                    ->label('Password')
                     ->password()
-                    ->required()
+                    ->nullable()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('images')
+                    ->label('Profile Image URL')
+                    ->nullable()
+                    ->url(),
+                Forms\Components\TextInput::make('external_urls')
+                    ->label('External URL')
+                    ->nullable()
+                    ->url(),
+                Forms\Components\TextInput::make('followers')
+                    ->label('Number of Followers')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\Select::make('role')
+                    ->label('Role')
+                    ->options([
+                        0 => 'User',
+                        1 => 'Admin',
+                    ])
+                    ->required(),
+                Forms\Components\TextInput::make('country')
+                    ->label('Country Code')
+                    ->maxLength(10)
+                    ->required(),
+                Forms\Components\Select::make('product')
+                    ->label('Product')
+                    ->options([
+                        'free' => 'Free',
+                        'premium' => 'Premium',
+                    ])
+                    ->required(),
+                Forms\Components\DateTimePicker::make('created_at')
+                    ->label('Created At')
+                    ->required(),
+                Forms\Components\DateTimePicker::make('updated_at')
+                    ->label('Updated At')
+                    ->required(),
+                Forms\Components\DateTimePicker::make('deleted_at')
+                    ->label('Deleted At')
+                    ->nullable(),
             ]);
     }
 
@@ -41,29 +88,49 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('User ID')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('spotify_id')
+                    ->label('Spotify ID')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Email Address')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('followers')
+                    ->label('Followers')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('role')
-                    ->numeric()
+                    ->label('Role')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('country')
+                    ->label('Country')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('product')
+                    ->label('Product')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated At')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Deleted At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // Add filters if needed
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -78,7 +145,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // Add related models if needed
         ];
     }
 
@@ -90,4 +157,9 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+    public function afterSave()
+{
+    return redirect()->route('filament.resources.users.index');
+}
 }

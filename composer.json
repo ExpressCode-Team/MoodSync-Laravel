@@ -8,6 +8,7 @@
         "php": "^8.2",
         "filament/filament": "3.2.57",
         "flowframe/laravel-trend": "^0.3.0",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
@@ -31,7 +32,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "App\\": "app/"
         }
     },
     "scripts": {
