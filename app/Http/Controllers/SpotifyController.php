@@ -32,18 +32,7 @@ class SpotifyController extends Controller
         return $accessToken;
     }
 
-    public function getArtistData($artistId)
-    {
-        $accessToken = $this->getAccessToken();
-
-        $url = "https://api.spotify.com/v1/artists/{$artistId}";
-
-        // Fetch artist data
-        $response = Http::withToken($accessToken)->get($url);
-
-        return response()->json($response->json());
-    }
-
+    
     public function __construct(SpotifyServices $spotifyService)    
     {
         $this->spotifyService = $spotifyService;
@@ -65,43 +54,55 @@ class SpotifyController extends Controller
         $tokenData = $this->spotifyService->getAccessToken($code);
 
         session(['spotify_token' => $tokenData['access_token']]);
-
+        
         return response()->json($tokenData);
     }
 
-    // Method untuk mendapatkan playlist pengguna
-    public function getUserPlaylists()
-    {
-        // Ambil token akses dari session
-        $accessToken = session('spotify_token');
+    // public function getArtistData($artistId)
+    // {
+    //     $accessToken = $this->getAccessToken();
 
-        if (!$accessToken) {
-            // Jika token tidak ada, kembalikan error
-            return response()->json(['error' => 'You need to log in with Spotify'], 401);
-        }
+    //     $url = "https://api.spotify.com/v1/artists/{$artistId}";
 
-        // Panggil layanan untuk mengambil data playlist
-        $playlists = $this->spotifyService->getUserPlaylists($accessToken);
+    //     // Fetch artist data
+    //     $response = Http::withToken($accessToken)->get($url);
 
-        if (!$playlists) {
-            // Jika respons kosong atau gagal, kembalikan error
-            return response()->json(['error' => 'Failed to fetch playlists from Spotify'], 500);
-        }
+    //     return response()->json($response->json());
+    // }
 
-        // Kembalikan daftar playlist dalam format JSON
-        return response()->json($playlists);
-    }
+//     // Method untuk mendapatkan playlist pengguna
+//     public function getUserPlaylists()
+//     {
+//         // Ambil token akses dari session
+//         $accessToken = session('spotify_token');
 
-    public function getUserProfile()
-    {
-        $accessToken = session('spotify_token');
+//         if (!$accessToken) {
+//             // Jika token tidak ada, kembalikan error
+//             return response()->json(['error' => 'You need to log in with Spotify'], 401);
+//         }
 
-        if (!$accessToken) {
-            return response()->json(['error' => 'You need to log in with Spotify'], 401);
-        }
+//         // Panggil layanan untuk mengambil data playlist
+//         $playlists = $this->spotifyService->getUserPlaylists($accessToken);
 
-        $profile = $this->spotifyService->getUserProfile($accessToken);
+//         if (!$playlists) {
+//             // Jika respons kosong atau gagal, kembalikan error
+//             return response()->json(['error' => 'Failed to fetch playlists from Spotify'], 500);
+//         }
 
-        return response()->json($profile);
-    }
+//         // Kembalikan daftar playlist dalam format JSON
+//         return response()->json($playlists);
+//     }
+
+//     public function getUserProfile()
+//     {
+//         $accessToken = session('spotify_token');
+
+//         if (!$accessToken) {
+//             return response()->json(['error' => 'You need to log in with Spotify'], 401);
+//         }
+
+//         $profile = $this->spotifyService->getUserProfile($accessToken);
+
+//         return response()->json($profile);
+//     }
 }
