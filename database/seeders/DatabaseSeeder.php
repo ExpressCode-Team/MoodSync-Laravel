@@ -15,10 +15,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
-            EmotionsTableSeeder::class,
-            MusicTracksTableSeeder::class,
-            RecommendationsTableSeeder::class,
-            FeedbacksTableSeeder::class,
+            GenresTableSeeder::class,
+            ExpressionsTableSeeder::class,
+            HistoryExpressionsTableSeeder::class,
+            SongRecommendationsTableSeeder::class,
+            UserGenresTableSeeder::class
         ]);
     }
 }
