@@ -57,29 +57,29 @@ class SpotifyServices
         return json_decode($response->getBody(), true);
     }
 
-    public function getUserPlaylists($accessToken)
-    {
-        $client = new Client();
+//     public function getUserPlaylists($accessToken)
+//     {
+//         $client = new Client();
 
-        // Permintaan ke Spotify API untuk mendapatkan daftar playlist
-        $response = $client->get('https://api.spotify.com/v1/me/playlists', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $accessToken,
-            ],
-        ]);
+//         // Permintaan ke Spotify API untuk mendapatkan daftar playlist
+//         $response = $client->get('https://api.spotify.com/v1/me/playlists', [
+//             'headers' => [
+//                 'Authorization' => 'Bearer ' . $accessToken,
+//             ],
+//         ]);
 
-        // Mengembalikan hasil respons JSON
-        return json_decode($response->getBody()->getContents(), true);
-    }
+//         // Mengembalikan hasil respons JSON
+//         return json_decode($response->getBody()->getContents(), true);
+//     }
 
-    public function getUserProfile($accessToken)
-    {
-        $response = $this->client->get('https://api.spotify.com/v1/me', [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $accessToken,
-            ],
-        ]);
+//     public function getUserProfile($accessToken)
+//     {
+//         $response = $this->client->get('https://api.spotify.com/v1/me', [
+//             'headers' => [
+//                 'Authorization' => 'Bearer ' . $accessToken,
+//             ],
+//         ]);
 
-        return json_decode($response->getBody()->getContents(), true);
-    }
+//         return json_decode($response->getBody()->getContents(), true);
+//     }
 }
