@@ -6,6 +6,10 @@ use App\Http\Controllers\SpotifyController;
 use App\Services\SpotifyServices;
 
 Route::get('/', function () {
+    return redirect('/home');
+});
+
+Route::get('/admin', function () {
     return redirect('/admin');
 });
 
