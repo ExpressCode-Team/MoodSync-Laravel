@@ -16,10 +16,12 @@ Route::get('users', [UserController::class, 'index']);
 Route::get('genres', [GenreController::class, 'index']);
 // Get history expressions
 Route::get('history-expressions', [HistoryExpressionController::class, 'index']);
+// Get last history expressions
+Route::get('last-history-expressions', [HistoryExpressionController::class, 'getLastExpression']);
 // Store history expressions
 Route::post('history-expressions', [HistoryExpressionController::class, 'store']);
 // Get song recomendations
-Route::get('song-recommendations', [SongRecommendationController::class, 'index']); 
+Route::get('song-recommendations', [SongRecommendationController::class, 'index']);
 // Store song recomendations
 Route::post('song-recommendations', [SongRecommendationController::class, 'store']);
 // Get User Genre
