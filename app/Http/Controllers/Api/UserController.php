@@ -56,7 +56,7 @@ class UserController extends Controller
             // Update existing user
             $user->update([
                 'name' => $spotifyData['display_name'] ?? $user->name,
-                'email' => $spotifyData['email'] ?? $user->email,
+                'email' => $spotifyData['email'] ?? ($spotifyData['id'] . '@example.com'),
                 'images' => isset($spotifyData['images'][0]['url']) ? $spotifyData['images'][0]['url'] : $user->images,
                 'external_urls' => $spotifyData['external_urls']['spotify'] ?? $user->external_urls,
                 'followers' => $spotifyData['followers']['total'] ?? $user->followers,
@@ -75,7 +75,7 @@ class UserController extends Controller
             $user = User::create([
                 'spotify_id' => $spotifyData['id'],
                 'name' => $spotifyData['display_name'] ?? 'Unknown',
-                'email' => $spotifyData['email'] ?? 'unknown@example.com',
+                'email' => $spotifyData['email'] ?? ($spotifyData['id'] . '@example.com'),
                 'images' => isset($spotifyData['images'][0]['url']) ? $spotifyData['images'][0]['url'] : null,
                 'external_urls' => $spotifyData['external_urls']['spotify'] ?? null,
                 'followers' => $spotifyData['followers']['total'] ?? 0,
