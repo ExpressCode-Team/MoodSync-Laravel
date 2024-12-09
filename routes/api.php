@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\GenreController;
 use App\Http\Controllers\Api\HistoryExpressionController;
 use App\Http\Controllers\Api\SongRecommendationController;
 use App\Http\Controllers\Api\UserGenreController;
+use App\Http\Controllers\Api\HistoryRecommendationController;  // Ensure the correct namespace
 
 // Store & Update User
 Route::post('users', [UserController::class, 'store']);
@@ -28,3 +29,7 @@ Route::post('song-recommendations', [SongRecommendationController::class, 'store
 Route::get('user-genres', [UserGenreController::class, 'index']);
 // Store User Genre
 Route::post('user-genres', [UserGenreController::class, 'store']);
+// Store Histori Rekomendasi
+Route::post('history-recommendations', [HistoryRecommendationController::class, 'store']); 
+// Get Histori Rekomendasi
+Route::get('history-recommendations', [HistoryRecommendationController::class, 'index']);  
