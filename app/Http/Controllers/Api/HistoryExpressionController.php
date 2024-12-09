@@ -58,12 +58,72 @@ class HistoryExpressionController extends Controller
         }
 
         // Fetch all history expressions for the found user
-        $historyExpressions = HistoryExpression::where('user_id', $user->id)->get();
+        $historyExpressions = HistoryExpression::where('user_id', $user->id)->orderby('created_at', 'desc')->get();
 
         return response()->json([
             'message' => 'History expressions retrieved successfully.',
             'status' => 200,
             'data' => $historyExpressions,
+        ], 200);
+    }
+
+    public function getLastExpression(Request $request)
+    {
+        // Get the access_token from the Authorization header
+        $accessToken = $request->header('access_token'); // Use 'access_token' header
+
+        // Check if access token is provided
+        if (!$accessToken) {
+            return response()->json([
+                'message' => 'access_token is required.',
+                'status' => 400,
+            ], 400);
+        }
+
+        // Call Spotify API to get user data
+        $spotifyResponse = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken
+        ])->get('https://api.spotify.com/v1/me');
+
+        // Check if Spotify API request was successful
+        if ($spotifyResponse->failed()) {
+            return response()->json([
+                'message' => 'Failed to fetch user data from Spotify.',
+                'status' => 401,
+            ], 401);
+        }
+
+        // Extract the spotify_id from the response
+        $spotifyId = $spotifyResponse->json()['id'];
+
+        // Find the user by spotify_id
+        $user = User::where('spotify_id', $spotifyId)->first();
+
+        // If user not found, return an error message
+        if (!$user) {
+            return response()->json([
+                'message' => 'User with the given Spotify ID not found.',
+                'status' => 404,
+            ], 404);
+        }
+
+        // Fetch the last history expression for the user
+        $lastExpression = HistoryExpression::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        // Check if no history expressions are found
+        if (!$lastExpression) {
+            return response()->json([
+                'message' => 'No history expressions found for this user.',
+                'status' => 404,
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Last history expression retrieved successfully.',
+            'status' => 200,
+            'data' => $lastExpression,
         ], 200);
     }
 
