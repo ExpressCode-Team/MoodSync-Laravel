@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ExpressionsTableSeeder::class,
             HistoryExpressionsTableSeeder::class,
             SongRecommendationsTableSeeder::class,
-            UserGenresTableSeeder::class
+            UserGenresTableSeeder::class,
+            HistoryRecommendationsTableSeeder::class,
         ]);
     }
 }
